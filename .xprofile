@@ -1,0 +1,5 @@
+setxkbmap -layout latam &
+numlockx &
+feh --bg-fill /home/jay/Pictures/1312.png &
+picom &
+nm-applet &
