@@ -46,6 +46,9 @@ keys = [Key(key[0], key[1], *key[2:]) for key in [
     ([mod, "control"], "q", lazy.shutdown()),
     ([mod], "r", lazy.spawncmd()),
 
+    # Hide Qtile Topbar
+    ([mod, "control"], "t", lazy.hide_show_bar()),
+
     # ------------ App Configs ------------
 
     # Menu
@@ -71,7 +74,7 @@ keys = [Key(key[0], key[1], *key[2:]) for key in [
 
     # Screenshots
     ([mod], "y", lazy.spawn("flameshot gui")),
-    ([mod, "shift"], "y", lazy.spawn("scrot -s")),
+    ([mod, "shift"], "y", lazy.spawn("flameshot screen")),
 
     # Lock Screen
     ([mod, "shift"], "p", lazy.spawn("slock")),
@@ -124,7 +127,7 @@ colors = [["#282c34", "#282c34"], # panel background
           ["#3d3f4b", "#434758"], # background for current screen tab
           ["#ffffff", "#ffffff"], # font color for group names
           ["#ff5555", "#ff5555"], # border line color for current tab
-          ["#74438f", "#74438f"], # border line color for 'other tabs' and color for 'odd widgets'
+          ["#c15a7d", "#c15a7d"], # border line color for 'other tabs' and color for 'odd widgets'
           ["#4f76c7", "#4f76c7"], # color for the 'even widgets'
           ["#e1acff", "#e1acff"], # window name
           ["#ecbbfb", "#ecbbfb"], # background for inactive screens
@@ -155,7 +158,7 @@ screens = [
                 ),
                 widget.GroupBox(
                     font = "Ubuntu Nerd Font",
-                    fontsize = 22,
+                    fontsize = 13,
                     margin_y = 3, 
                     margin_x = 0,
                     padding_y = 0, 
@@ -165,7 +168,7 @@ screens = [
                     inactive = colors[1],
                     rounded = False,
                     highlight_color = colors[1],
-                    highlight_method = "border",
+                    highlight_method = "line",
                     this_current_screen_border = colors[6],
                     this_screen_border = colors [4],
                     other_current_screen_border = colors[6],
@@ -240,10 +243,13 @@ screens = [
                 widget.Battery(
                     foreground = colors[6],
                     background = colors[8],
-                    padding = 0,
-                    charge_char='!', 
-                    discharge_char='-', 
-                    format='{percent:2.0%}',
+                    low_foreground = "#880808",
+                    padding = 4,
+                    charge_char='↑', 
+                    discharge_char='↓', 
+                    full_char=' ',
+                    format='{char} {percent:2.0%}',
+                    show_short_text= False,
                     font = "scientifica",
                     fontsize = 14,
                 ),
@@ -276,6 +282,7 @@ screens = [
                     foreground = colors[3],
                     font = "scientifica",
                     fontsize = 14,
+                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('gsimplecal')},
                 ),
             ],
             24,
@@ -285,6 +292,12 @@ screens = [
         ),
     ),
 ]
+
+def open_calendar(qtile):
+   qtile.cmd_spawn('gsimplecal')
+
+def close_calendar(qtile):
+   qtile.cmd_spawn('killall -q gsimplecal')
 
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),

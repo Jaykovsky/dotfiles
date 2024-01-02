@@ -11,3 +11,4 @@ set PATH /home/jay/.node_modules_global/bin $PATH
 set PATH $PATH:$HOME/.config/composer/vendor/bin
 set -e COLUMNS
 set -e LINES
+set --export ANDROID_HOME $HOME/Android/Sdk

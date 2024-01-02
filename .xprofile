@@ -1,5 +1,5 @@
 setxkbmap -layout latam &
 numlockx &
-feh --bg-fill /home/jay/Pictures/1312.png &
+feh --bg-max /home/jay/Pictures/mario.jpeg &
 picom &
 nm-applet &
